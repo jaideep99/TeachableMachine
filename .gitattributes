@@ -1,0 +1,2 @@
+TeachableMachine[[:space:]]-[[:space:]]Python/*.tflite filter=lfs diff=lfs merge=lfs -text
+TeachableMachine[[:space:]]-[[:space:]]Python/*.h5 filter=lfs diff=lfs merge=lfs -text

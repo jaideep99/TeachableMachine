@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "572506452725",
+    "firebase_url": "https://teachable-machine-eb5f7.firebaseio.com",
+    "project_id": "teachable-machine-eb5f7",
+    "storage_bucket": "teachable-machine-eb5f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572506452725:android:fac456d37e306b7c1b8bbc",
+        "android_client_info": {
+          "package_name": "com.example.teachablemachine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572506452725-clsmrfphfjev5j9b4n0mgnht0lgh95q2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.teachablemachine",
+            "certificate_hash": "ff9bd0b0b13921c676dbf925d4a7d325769f2570"
+          }
+        },
+        {
+          "client_id": "572506452725-57gghh6i9gldrq2v1f2j8je00kurp735.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3Qc0Pn1LdYlHjorB07n4-oj5FmuAti7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572506452725-57gghh6i9gldrq2v1f2j8je00kurp735.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

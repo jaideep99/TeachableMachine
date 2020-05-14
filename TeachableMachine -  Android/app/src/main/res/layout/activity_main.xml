@@ -1,0 +1,155 @@
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grays"
+    tools:context=".MainActivity"
+    android:id="@+id/drawer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="50dp"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center_horizontal"
+                    >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/images"
+                    >
+
+                    <ImageView
+                        android:layout_width="320dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/teachimages"
+                        />
+                    <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:text="Images"
+                        android:layout_marginTop="8dp"
+                        android:textSize="24sp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins_bold"
+                        />
+
+                    <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:text="Teach a model to classify images using files or your webcam."
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/sounds"
+                    >
+
+                    <ImageView
+                        android:layout_width="320dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/teachsounds"
+
+                        />
+                    <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:text="Sounds"
+                        android:layout_marginTop="8dp"
+                        android:textSize="24sp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins_bold"
+                        />
+
+                    <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:text="Teach a model to classify audio by recording short sound samples. (WAV/MP3/etc file support coming soon.)"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins"
+                        />
+
+                </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="28dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:titleMarginStart="40dp" />
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="290dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#ffffff"
+        app:itemTextColor="#595a5c"
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/drawer_header"
+        android:theme="@style/fonter"
+        app:itemIconPadding="10dp"
+        app:itemHorizontalPadding="44dp"
+        >
+
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

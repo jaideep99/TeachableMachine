@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
+    android:layout_margin="14dp"
+    android:padding="20dp"
+    android:elevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class1"
+            android:singleLine="true"
+            style="@style/fonter"
+            android:background="@null"
+            android:textColor="#000"
+            android:id="@+id/classname"
+            android:layout_alignParentLeft="true"
+            />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/saveedit"
+            android:layout_toRightOf="@+id/classname"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="4dp"
+            android:id="@+id/editclass"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/delete"
+            android:id="@+id/deleteclass"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="4dp"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="4dp"
+        android:background="#BDC1C6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/databtn"
+        android:text="Add Image Samples"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="18sp"
+        android:textColor="@color/blues"
+        android:layout_marginTop="4dp"
+        />
+
+
+</LinearLayout>

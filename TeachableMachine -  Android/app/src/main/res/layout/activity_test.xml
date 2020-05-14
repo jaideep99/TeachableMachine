@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TestActivity"
+    android:background="@color/grays"
+    android:padding="20dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:id="@+id/image"
+        android:scaleType="fitCenter"
+        android:background="@drawable/dashed"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_blue"
+        android:text="Take Photo"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/poppins"
+        android:textSize="18sp"
+        android:id="@+id/click"
+        android:padding="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Output: "
+        android:textColor="@color/blues"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Output class here"
+        android:id="@+id/output"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="#000"
+        android:textSize="20sp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycler"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

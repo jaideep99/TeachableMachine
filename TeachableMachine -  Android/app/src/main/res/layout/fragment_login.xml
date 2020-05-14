@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="#E9EAEE"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="#000833"
+            android:lineSpacingExtra="0sp"
+            android:gravity="center_horizontal"
+            tools:text="Log in to your account"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/email"
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="Email Id"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:inputType="textEmailAddress"
+                android:layout_margin="8dp"
+                android:id="@+id/email"
+                android:textColorHint="#9fa2b1"
+                android:textColor="#000833"
+                android:paddingLeft="16dp"
+                android:background="@null"
+                />
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/background"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/lock"
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Password"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_margin="8dp"
+                android:textColorHint="#9fa2b1"
+                android:textColor="#000833"
+                android:paddingLeft="16dp"
+                android:background="@null"
+                />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:id="@+id/visibility"
+                android:src="@drawable/invisible"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            >
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember Me"
+                android:textSize="12sp"
+                android:textColor="#9fa2b1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password?"
+                android:gravity="right"
+                android:id="@+id/forgotpassword"
+                android:textSize="12sp"
+                android:textColor="@color/colorAccent"/>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="34dp"
+            android:gravity="center"
+            android:id="@+id/login_btn"
+            android:background="@drawable/background_blue"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textColor="#FFFFFf"
+                android:fontFamily="@font/poppins"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
