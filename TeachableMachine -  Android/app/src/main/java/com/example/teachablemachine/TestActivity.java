@@ -136,7 +136,6 @@ public class TestActivity extends AppCompatActivity {
     void to_model(Bitmap bitmap){
 
 
-
         int batchNum = 0;
         float[][][][] input = new float[1][256][256][3];
         for (int x = 0; x < 256; x++) {

@@ -7,7 +7,7 @@ soc = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 print('socket created')
    
 port = 8080
-host = '192.168.0.102'
+host = '192.168.0.103'
 
 Ip = socket.gethostname()
 
@@ -30,19 +30,27 @@ running = True
 
 while running:
     try:
-        clientsocket,address = soc.accept()
-        print('connected with '+address[0]+' : '+str(address[1]))
-        message = clientsocket.recv(1024).decode()
-        print(message)
-        configs = message.split(',')
-        print(configs)
-        make_model(configs[0],configs[1],configs[2],configs[3],configs[4:])
+        
+        conn, addr = soc.accept()
+        length_of_message = int.from_bytes(conn.recv(2), byteorder='big')
+        msg = conn.recv(length_of_message).decode("UTF-8")
+        print("Length of Message : ", length_of_message)
 
+        configs = msg.split(',')
+        print(configs[0],configs[1],configs[2],configs[3],configs[4],configs[5],configs[6:])
+        make_model(configs[0],configs[1],configs[2],configs[3],configs[4],configs[5],configs[6:])
+
+        message_to_send = "Training Completed".encode("UTF-8")
+        conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+        conn.send(message_to_send)
+
+        print("Acknowledgement Sent...")
+        conn.close()
     except KeyboardInterrupt:
-        print(f"closing connection to {address}.")
+        print(f"closing connection to {addr}.")
         print('shutting down server.......')
-        clientsocket.shutdown(socket.SHUT_RDWR)
-        clientsocket.close()
+        conn.shutdown(socket.SHUT_RDWR)
+        conn.close()
         sys.exit()
         break
 

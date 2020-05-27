@@ -10,6 +10,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -22,6 +23,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -50,6 +52,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,7 +63,7 @@ public class IgridActivity extends AppCompatActivity {
     private String path,classname;
 
     private TextView classtitle;
-    private LinearLayout addImage;
+    private LinearLayout addImage,picker;
     private GridView imageGrid;
     private ImageAdapter adapter;
     private Dialog delete_dialog;
@@ -73,6 +76,7 @@ public class IgridActivity extends AppCompatActivity {
     Uri OutputUri;
 
     String local_path="";
+    String fpath = "";
     String project = "";
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private static final int CAMERA_REQUEST = 9999;
@@ -90,9 +94,12 @@ public class IgridActivity extends AppCompatActivity {
         path = (String) getIntent().getStringExtra("path");
         classname = (String) getIntent().getStringExtra("classname");
         project = (String) getIntent().getStringExtra("project");
+        fpath = (String) getIntent().getStringExtra("fpath");
+
 
         classtitle = (TextView) findViewById(R.id.classTitle);
         addImage = (LinearLayout) findViewById(R.id.addimage);
+        picker = (LinearLayout) findViewById(R.id.picker);
         classtitle.setText(classname);
 
         delete_dialog =  new Dialog(this);
@@ -137,15 +144,50 @@ public class IgridActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 File f = new File(path+"/"+sItemList.get(to_delete));
+                String fbpath = fpath+"/"+sItemList.get(to_delete);
                 f.delete();
                 itemList.remove(to_delete);
                 sItemList.remove(to_delete);
                 to_delete = -1;
 
+                StorageReference delref = FirebaseStorage.getInstance().getReference().child(fbpath);
+                delref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(IgridActivity.this,"Deleted Image Successfully",Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(IgridActivity.this,"Deletion Failed!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 adapter.notifyDataSetChanged();
                 imageGrid.invalidateViews();
                 imageGrid.setAdapter(adapter);
                 delete_dialog.dismiss();
+            }
+        });
+
+        picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ActivityCompat.checkSelfPermission(IgridActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(IgridActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
+                    return;
+                }
+
+                Toast.makeText(IgridActivity.this,"starting intent",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                intent.setType("image/*");
+                startActivityForResult(intent,1);
+
+
             }
         });
 
@@ -191,7 +233,103 @@ public class IgridActivity extends AppCompatActivity {
             imageGrid.setAdapter(adapter);
         }
 
+        if(requestCode == 1 && resultCode==RESULT_OK)
+        {
+            List<Bitmap> bits = new ArrayList<>();
+            ClipData clip = data.getClipData();
+
+            if(clip!=null)
+            {
+                for(int i=0;i<clip.getItemCount();i++)
+                {
+                    Uri imageUri = clip.getItemAt(i).getUri();
+                    Log.d("picker",imageUri.toString());
+                    try{
+                        InputStream is = getContentResolver().openInputStream(imageUri);
+                        Bitmap bit = BitmapFactory.decodeStream(is);
+                        bits.add(bit);
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else
+            {
+                Uri img = data.getData();
+                try{
+                    InputStream is = getContentResolver().openInputStream(img);
+                    Bitmap bit = BitmapFactory.decodeStream(is);
+                    bits.add(bit);
+                }
+                catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            apply(bits);
+
+        }
+
     }
+
+    void apply(final List<Bitmap> bits)
+    {
+        final File imagesFolder = new File(path);
+        final List<String> temps = new ArrayList<>();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("picker","count: "+bits.size());
+                for(int i=0;i<bits.size();i++)
+                {
+                    final String ntemp = "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+                    File newfile = new File(imagesFolder,ntemp);
+                    Bitmap b = bits.get(i);
+                    b = Bitmap.createScaledBitmap(b, 256, 256, false);
+
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+                    FileOutputStream fo = null;
+                    try {
+                        newfile.createNewFile();
+                        fo = new FileOutputStream(newfile);
+                        fo.write(bytes.toByteArray());
+                        fo.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Bitmap temp = BitmapFactory.decodeFile(path+"/"+ntemp);
+//                    upload(path,ntemp);
+                    itemList.add(temp);
+                    sItemList.add(ntemp);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            upload(path,ntemp);
+                        }
+                    }).start();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        imageGrid.invalidateViews();
+                        imageGrid.setAdapter(adapter);
+                    }
+                });
+            }
+        }).start();
+
+
+    }
+
 
     private void upload(String path,String ntemp) {
 
@@ -205,12 +343,12 @@ public class IgridActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                Toast.makeText(IgridActivity.this,"upload successful",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(IgridActivity.this,"upload successful",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(IgridActivity.this, e.getCause().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(IgridActivity.this, e.getCause().getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override

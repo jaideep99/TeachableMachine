@@ -1,7 +1,7 @@
 import tensorflow as tf
 from keras import Sequential
 from keras.layers import Dense
-from keras import regularizers
+from keras.optimizers import Adam
 from keras.layers import Conv2D,MaxPooling2D,Flatten
 from keras.losses import SparseCategoricalCrossentropy
 import numpy as np
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from convert import convert
 from utils import push_model
 
-def CNN(x_train,x_test,y_train,y_test,epochs,n,project,uid,ptype):
+def CNN(x_train,x_test,y_train,y_test,epochs,batch,learning_rate,n,project,uid,ptype):
 
     model = Sequential()
     
@@ -30,9 +30,9 @@ def CNN(x_train,x_test,y_train,y_test,epochs,n,project,uid,ptype):
     model.add(Dense(512,activation='relu'))
     model.add(Dense(n,activation='softmax'))
 
-    model.compile('adam',loss='categorical_crossentropy',metrics=['accuracy'])
+    model.compile(Adam(learning_rate=learning_rate),loss='categorical_crossentropy',metrics=['accuracy'])
 
-    history = model.fit(x_train,y_train,epochs=epochs,verbose=1)
+    history = model.fit(x_train,y_train,epochs=epochs,batch_size=batch,verbose=1)
 
     predicted = model.predict(x_test)
 

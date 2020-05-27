@@ -1,5 +1,6 @@
 package com.example.teachablemachine;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -43,7 +50,7 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
     private TextView foldername;
     private LinearLayout deletebtn;
     int to_delete = -1;
-
+    String fpath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
 
         path = (String) getIntent().getStringExtra("path");
         name = (String) getIntent().getStringExtra("projectname");
+        fpath = (String) getIntent().getStringExtra("fpath");
 
         title = (TextView) findViewById(R.id.title);
         train = (LinearLayout) findViewById(R.id.train);
@@ -104,7 +112,20 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
                     adapter.notifyDataSetChanged();
                     delete_dialog.dismiss();
                     classcount--;
+
+                    final String  fbpath = fpath+"/"+itemList.get(to_delete);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            StorageReference listref = FirebaseStorage.getInstance().getReference().child(fbpath);
+                            deletefb(listref);
+                        }
+                    }).start();
+
+                    Toast.makeText(ImageActivity.this,"Class Deleted Sucessfully!!",Toast.LENGTH_SHORT).show();
                 }
+
+
 
             }
         });
@@ -122,6 +143,40 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
         });
 
 
+    }
+
+
+    void deletefb(StorageReference listref)
+    {
+        listref.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+
+                        for (StorageReference prefix : listResult.getPrefixes()) {
+                            // All the prefixes under listRef.
+                            // You may call listAll() recursively on them.
+
+                            deletefb(prefix);
+                        }
+
+                        final int[] pp = {0};
+                        for (StorageReference item : listResult.getItems()) {
+                            // All the items under listRef.
+                            item.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    pp[0]++;
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Uh-oh, an error occurred!
+                                }
+                            });
+                        }
+                    }
+                });
     }
 
     public String createClassStr(){
@@ -199,6 +254,7 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
         i.putExtra("path",path+"/"+itemList.get(position));
         i.putExtra("classname",itemList.get(position));
         i.putExtra("project",name);
+        i.putExtra("fpath",fpath+"/"+itemList.get(position));
         startActivity(i);
 
     }

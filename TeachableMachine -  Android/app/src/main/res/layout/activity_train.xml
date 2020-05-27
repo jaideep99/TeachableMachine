@@ -1,103 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="20dp"
     android:background="@color/grays"
     tools:context=".TrainActivity">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:padding="10dp"
+        android:orientation="vertical"
+        android:elevation="6dp"
+        android:layout_margin="12dp"
         android:background="@drawable/background">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ip Address"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="IP Config"
             android:textColor="#000000"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="18sp"
-            />
+            android:textSize="19sp" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="192.168.0.102"
+            android:fontFamily="@font/poppins_medium"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
-            android:paddingStart="16dp"
             android:textColor="#000"
             android:id="@+id/ip"
             />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
         android:background="@drawable/background"
-        android:padding="10dp">
+        android:elevation="6dp"
+        android:layout_margin="12dp"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Epochs"
-            android:textColor="#000000"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="18sp"
-            />
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="50"
-            android:layout_marginLeft="10dp"
-            android:paddingStart="16dp"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:id="@+id/epochs"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/background_blue"
-        android:id="@+id/train"
-        >
-        <TextView
-            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Training"
+                android:textColor="#000"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="19sp"
+                android:layout_marginBottom="6dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:id="@+id/train"
+                android:background="@drawable/background_lucent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Train Model"
+                    android:padding="6dp"
+                    android:gravity="center"
+                    android:textColor="@color/bluesdark"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:id="@+id/rotate"
+                android:visibility="gone"
+                android:background="@drawable/background_lucent">
+
+                <ProgressBar
+                    android:padding="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:indeterminate="true"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Train"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:fontFamily="@font/poppins_semibold"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"/>
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Testing"
+                android:textColor="#000"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="20sp"
+                android:layout_marginBottom="6dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:id="@+id/test"
+                android:background="@drawable/background_lucent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Test Model"
+                    android:padding="6dp"
+                    android:gravity="center"
+                    android:textColor="@color/bluesdark"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/background_blue"
-        android:id="@+id/test"
-        android:layout_marginTop="30dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Test "
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:fontFamily="@font/poppins_semibold"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"/>
+            android:background="@drawable/background"
+            android:orientation="vertical"
+            android:elevation="6dp"
+            android:layout_margin="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/dropdown"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hyper Parameters"
+                    android:layout_weight="0.9"
+                    android:textColor="#000"
+                    android:padding="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="20sp"/>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/down_arrow"
+                    android:layout_marginRight="4dp"
+                    android:id="@+id/dchange"
+                    android:foregroundGravity="center_vertical"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/hidden">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grays"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Epochs"
+                        android:layout_weight="0.5"
+                        android:textColor="@color/bluesdark"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_marginRight="16dp"
+                        android:textSize="18sp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background_lucent"
+                        android:layout_weight="0.4"
+                        >
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="50"
+                            android:background="@null"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="18sp"
+                            android:textColor="@color/bluesdark"
+                            android:id="@+id/epochs"
+                            />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/query"
+                        android:layout_weight="0.1"
+                        android:id="@+id/epoch_help"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grays"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Batch Size"
+                        android:layout_weight="0.5"
+                        android:textColor="@color/bluesdark"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_marginRight="16dp"
+                        android:textSize="18sp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background_lucent"
+                        android:layout_weight="0.4"
+                        >
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text="16"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="18sp"
+                            android:textColor="@color/bluesdark"
+                            android:id="@+id/batch"
+                            />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/query"
+                        android:layout_weight="0.1"
+                        android:id="@+id/batch_help"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grays"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Learning\nRate"
+                        android:layout_weight="0.5"
+                        android:textColor="@color/bluesdark"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_marginRight="16dp"
+                        android:textSize="18sp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background_lucent"
+                        android:layout_weight="0.4"
+                        >
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="0.001"
+                            android:background="@null"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="18sp"
+                            android:textColor="@color/bluesdark"
+                            android:id="@+id/lrate"
+                            />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/query"
+                        android:layout_weight="0.1"
+                        android:id="@+id/lrate_help"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

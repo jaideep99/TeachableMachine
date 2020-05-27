@@ -78,7 +78,7 @@ def push_model(project,Uid,ptype):
     cred = credentials.Certificate('serviceAccountCredentials.json')
     app = firebase_admin.initialize_app(cred, {
         'storageBucket': 'teachable-machine-eb5f7.appspot.com'
-    },name='storage')
+    },name='storage2')
 
     storage_bucket = storage.bucket(app=app)
 

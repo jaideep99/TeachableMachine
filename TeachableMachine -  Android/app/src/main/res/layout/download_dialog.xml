@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="360dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="28dp"
+    android:padding="12dp"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal">
+
+    <ProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:indeterminate="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="\u2022 Project doesn't exist locally..\n\u2022 Project is being downloaded...\n\u2022 Please do not exit from this screen."
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="#000"/>
+
+</LinearLayout>

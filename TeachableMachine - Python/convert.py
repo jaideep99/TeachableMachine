@@ -29,5 +29,3 @@ def convert(name):
     # print(output_details[0]['index'])
     output_data = interpreter.get_tensor(output_details[0]['index'])
     # print(output_data)
-
-convert('Fruits')

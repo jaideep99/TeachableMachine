@@ -31,15 +31,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/addimage"
+            android:layout_marginBottom="14dp"
+            android:layout_marginRight="14dp"
+            android:id="@+id/picker">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/picker"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="14dp"
             android:layout_marginRight="14dp"
             android:id="@+id/addimage">
 
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/add_white"/>
 
             <ImageView
                 android:layout_width="36dp"
