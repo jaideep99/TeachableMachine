@@ -19,18 +19,27 @@
         android:background="@drawable/dashed"
         />
 
-    <Button
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background_blue"
-        android:text="Take Photo"
-        android:textAllCaps="false"
-        android:textColor="#ffffff"
-        android:fontFamily="@font/poppins"
-        android:textSize="18sp"
-        android:id="@+id/click"
-        android:padding="8dp"/>
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/picker"
+            android:id="@+id/filepicker"
+            android:layout_marginRight="30dp"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cam_blue"
+            android:id="@+id/click"
+            />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -55,5 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:id="@+id/recycler"></androidx.recyclerview.widget.RecyclerView>
+        android:id="@+id/recycler" />
+
 </LinearLayout>

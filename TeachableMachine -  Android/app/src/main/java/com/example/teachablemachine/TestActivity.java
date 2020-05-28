@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,7 +40,7 @@ import java.util.List;
 public class TestActivity extends AppCompatActivity {
 
     ImageView input;
-    Button click;
+    ImageView click,picker;
     TextView output;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -59,7 +60,8 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         input = (ImageView) findViewById(R.id.image);
-        click = (Button) findViewById(R.id.click);
+        click = (ImageView) findViewById(R.id.click);
+        picker = (ImageView) findViewById(R.id.filepicker);
         output = (TextView) findViewById(R.id.output);
 
         classes = getIntent().getStringArrayListExtra("classes");
@@ -196,7 +198,7 @@ public class TestActivity extends AppCompatActivity {
                                         probitems.add(new probitem(classes.get(i),probabilities[i]));
                                     }
 
-                                    output.setText(classes.get(index)+"\n"+probs);
+                                    output.setText(classes.get(index));
                                     adapter = new ProbAdapter(probitems);
                                     manager = new LinearLayoutManager(TestActivity.this);
                                     recycler.setLayoutManager(manager);

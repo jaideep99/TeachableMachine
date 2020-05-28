@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from convert import convert
 from utils import push_model
 
-def CNN(x_train,x_test,y_train,y_test,epochs,batch,learning_rate,n,project,uid,ptype):
+def CNN(conn,x_train,x_test,y_train,y_test,epochs,batch,learning_rate,n,project,uid,ptype):
 
     model = Sequential()
     
@@ -49,9 +49,24 @@ def CNN(x_train,x_test,y_train,y_test,epochs,batch,learning_rate,n,project,uid,p
     plt.plot(losses)
     plt.show()
 
+    message_to_send = "Saving Model...".encode("UTF-8")
+    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+    conn.send(message_to_send)
+
     print("Saving Model ....\n")
     model.save(project+".h5")
+
+    message_to_send = "Converting Model...".encode("UTF-8")
+    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+    conn.send(message_to_send)
+
     print("Conerting Model to .tflite ....\n") 
     convert(project)
+    
+    message_to_send = "Pushing Model to cloud...".encode("UTF-8")
+    conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
+    conn.send(message_to_send)
+
     print("pushing model to cloud...\n")
     push_model(project,uid,ptype)
+    print("Pushing to cloud successful...\n")

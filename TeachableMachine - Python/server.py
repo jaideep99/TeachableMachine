@@ -38,7 +38,7 @@ while running:
 
         configs = msg.split(',')
         print(configs[0],configs[1],configs[2],configs[3],configs[4],configs[5],configs[6:])
-        make_model(configs[0],configs[1],configs[2],configs[3],configs[4],configs[5],configs[6:])
+        make_model(conn,configs[0],configs[1],configs[2],configs[3],configs[4],configs[5],configs[6:])
 
         message_to_send = "Training Completed".encode("UTF-8")
         conn.send(len(message_to_send).to_bytes(2, byteorder='big'))
