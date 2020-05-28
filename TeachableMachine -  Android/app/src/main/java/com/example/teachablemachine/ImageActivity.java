@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +38,13 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
     private LinearLayout train;
     private FloatingActionButton create;
     private RecyclerView classlist;
-    private Dialog delete_dialog;
+    private Dialog delete_dialog,create_dialog;
     private RecyclerView.LayoutManager layoutManager;
     String path;
     String name;
+
+    private EditText cname;
+    private LinearLayout dcreate;
 
     List<String> itemList = new ArrayList<String>();
 
@@ -51,6 +56,8 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
     private LinearLayout deletebtn;
     int to_delete = -1;
     String fpath = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,12 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
         create = (FloatingActionButton) findViewById(R.id.addclass);
         title.setText(name);
 
+        create_dialog = new Dialog(this);
+        create_dialog.setContentView(R.layout.class_dialog);
+
+        cname = (EditText) create_dialog.findViewById(R.id.classname);
+        dcreate = (LinearLayout) create_dialog.findViewById(R.id.saver);
+
         loadfolders();
 
         classlist = (RecyclerView) findViewById(R.id.classes);
@@ -77,16 +90,27 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
         classlist.setAdapter(adapter);
         adapter.setOnItemClickListener(ImageActivity.this);
 
-
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File newf = new File(path+"/Class"+classcount);
+                create_dialog.show();
+            }
+        });
+
+        dcreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String cc = cname.getText().toString();
+
+                File newf = new File(path+"/"+cc);
                 if(!newf.exists()){
                     newf.mkdir();
+                    create_dialog.dismiss();
                 }
                 else {
-                    Toast.makeText(ImageActivity.this,"Project Name Already Taken!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImageActivity.this,"Class Name Already Taken!",Toast.LENGTH_SHORT).show();
+                    create_dialog.dismiss();
                 }
                 classcount++;
 

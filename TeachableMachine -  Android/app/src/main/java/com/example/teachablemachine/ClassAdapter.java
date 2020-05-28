@@ -58,14 +58,14 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassHolder>
 
     public class ClassHolder extends RecyclerView.ViewHolder{
 
-        EditText classname;
+        TextView classname;
         ImageView delete;
         TextView dataset;
 
         public ClassHolder(@NonNull View itemView) {
             super(itemView);
 
-            classname = (EditText) itemView.findViewById(R.id.classname);
+            classname = (TextView) itemView.findViewById(R.id.classname);
             delete = (ImageView) itemView.findViewById(R.id.deleteclass);
             dataset = (TextView) itemView.findViewById(R.id.databtn);
 

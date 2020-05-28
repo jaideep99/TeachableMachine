@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:id="@+id/projectname"
+        android:id="@+id/classname"
         android:hint="Class Name"
         android:focusableInTouchMode="true"
         style="@style/fonter"/>
@@ -34,7 +34,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save"
+        android:id="@+id/saver"
         android:background="@drawable/background_blue_wide"
         android:padding="10dp"
         android:layout_marginTop="16dp"

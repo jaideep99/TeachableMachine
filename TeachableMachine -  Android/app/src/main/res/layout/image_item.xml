@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Class1"
-            android:singleLine="true"
-            style="@style/fonter"
-            android:background="@null"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="20sp"
             android:textColor="#000"
             android:id="@+id/classname"
             android:layout_alignParentLeft="true"
