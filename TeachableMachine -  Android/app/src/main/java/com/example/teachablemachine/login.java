@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,8 +46,15 @@ public class login extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    Context context;
+
+    login(Context cont)
+    {
+        this.context = cont;
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
@@ -58,9 +66,6 @@ public class login extends Fragment {
         remember = (CheckBox) rootView.findViewById(R.id.remember);
         login = (LinearLayout)rootView.findViewById(R.id.login_btn);
 
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(),"poppins.ttf");
-        email.setTypeface(font);
-        password.setTypeface(font);
 
         eye.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +92,19 @@ public class login extends Fragment {
                 if(mUser != null)
                 {
 //                    Toast.makeText(getActivity().getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
-                    startActivity(i);
-                    getActivity().finish();
+
+                    Activity a = getActivity();
+                    if(getActivity()!=null)
+                    {
+                        Intent i = new Intent(getActivity(),MainActivity.class);
+                        startActivity(i);
+                        getActivity().finish();
+                    }
+                    else
+                    {
+//                        Toast.makeText(context,"Activity is Null!!",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else{
 //                    Toast.makeText(getActivity().getApplicationContext(),"Please Login!!",Toast.LENGTH_SHORT).show();
@@ -113,33 +128,41 @@ public class login extends Fragment {
                     password.requestFocus();
                 }
                 else if(emailid.isEmpty() && pass.isEmpty()){
-                    Toast.makeText(getActivity().getApplicationContext(),"Required Fields Are Empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Required Fields Are Empty!",Toast.LENGTH_SHORT).show();
                 }
                 else if(!(emailid.isEmpty() && !(pass.isEmpty()))){
-                    mFirebaseAuth.signInWithEmailAndPassword(emailid,pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
+
+                    mFirebaseAuth.signInWithEmailAndPassword(emailid,pass).addOnCompleteListener((Activity) context,new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
+                            Log.d("login","inside Successfull");
                             if(!task.isSuccessful()){
 
-                                Toast.makeText(getActivity().getApplicationContext(),"Login Unsuccessful!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"Login Unsuccessful!",Toast.LENGTH_SHORT).show();
 
                             }
                             else{
 
 //                                Toast.makeText(getActivity().getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
                                 setLogin(true);
-                                Intent i = new Intent(getActivity().getApplicationContext(),MainActivity.class);
+                                Intent i = new Intent(context,MainActivity.class);
                                 startActivity(i);
                                 getActivity().finish();
 
                             }
 
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context,"Failed Auth",Toast.LENGTH_SHORT).show();
+                        }
                     });
+
                 }
                 else {
-                    Toast.makeText(getActivity().getApplicationContext(),"Error Occurred!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Error Occurred!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -152,7 +175,6 @@ public class login extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("login", String.valueOf(loggedin()));
         if(loggedin()){
             mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         }

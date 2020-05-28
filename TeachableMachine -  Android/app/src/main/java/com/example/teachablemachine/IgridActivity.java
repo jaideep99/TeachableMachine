@@ -180,8 +180,6 @@ public class IgridActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(IgridActivity.this,"starting intent",Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                 intent.setType("image/*");
@@ -243,7 +241,6 @@ public class IgridActivity extends AppCompatActivity {
                 for(int i=0;i<clip.getItemCount();i++)
                 {
                     Uri imageUri = clip.getItemAt(i).getUri();
-                    Log.d("picker",imageUri.toString());
                     try{
                         InputStream is = getContentResolver().openInputStream(imageUri);
                         Bitmap bit = BitmapFactory.decodeStream(is);
@@ -279,7 +276,6 @@ public class IgridActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d("picker","count: "+bits.size());
                 for(int i=0;i<bits.size();i++)
                 {
                     final String ntemp = "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg";

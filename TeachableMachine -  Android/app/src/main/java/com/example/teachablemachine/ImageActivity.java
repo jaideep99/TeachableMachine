@@ -107,13 +107,13 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
                 if(to_delete!=-1) {
                     File del = new File(path + "/" + itemList.get(to_delete));
                     deleteRecursive(del);
+                    final String  fbpath = fpath+"/"+itemList.get(to_delete);
                     itemList.remove(to_delete);
                     to_delete = -1;
                     adapter.notifyDataSetChanged();
                     delete_dialog.dismiss();
                     classcount--;
 
-                    final String  fbpath = fpath+"/"+itemList.get(to_delete);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -268,21 +268,23 @@ public class ImageActivity extends AppCompatActivity implements ClassAdapter.OnI
 
     }
 
-    @Override
-    public void onRename(int position, String newname) {
+//    @Override
+//    public void onRename(int position, String newname) {
+//
+//        File olds  = new File(path+"/"+itemList.get(position));
+//        File news  = new File(path+"/"+newname);
+//
+//        try {
+//            olds.renameTo(news);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        itemList.set(position,newname);
+//        adapter.notifyDataSetChanged();
+//
+//    }
 
-        File olds  = new File(path+"/"+itemList.get(position));
-        File news  = new File(path+"/"+newname);
 
-        try {
-            olds.renameTo(news);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        itemList.set(position,newname);
-        adapter.notifyDataSetChanged();
-
-    }
 }

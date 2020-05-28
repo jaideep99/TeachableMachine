@@ -47,6 +47,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:hint="Email Id"
+                android:fontFamily="@font/poppins_medium"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:inputType="textEmailAddress"
@@ -79,6 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="Password"
+                android:fontFamily="@font/poppins_medium"
                 android:id="@+id/password"
                 android:inputType="textPassword"
                 android:singleLine="true"
@@ -105,6 +107,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             >
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:layout_width="wrap_content"

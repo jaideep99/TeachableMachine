@@ -1,12 +1,15 @@
 package com.example.teachablemachine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 
@@ -25,6 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent i=new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -46,4 +50,6 @@ public class SplashActivity extends AppCompatActivity {
             dir.mkdir();
         }
     }
+
+
 }

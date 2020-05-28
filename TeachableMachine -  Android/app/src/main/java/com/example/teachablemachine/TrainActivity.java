@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ public class TrainActivity extends AppCompatActivity {
     boolean dropped = false;
     ImageView dchange;
     TextView progress;
+    CheckBox withdownload;
 
 
 
@@ -59,6 +61,7 @@ public class TrainActivity extends AppCompatActivity {
         dchange = (ImageView) findViewById(R.id.dchange);
         test = (LinearLayout)findViewById(R.id.test);
         progress = (TextView) findViewById(R.id.progress);
+        withdownload = (CheckBox) findViewById(R.id.download);
 
         dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +106,7 @@ public class TrainActivity extends AppCompatActivity {
                     sendargs.execute();
 
 
+
                 }
                 catch (Exception e){
                     Toast.makeText(TrainActivity.this,"Please make valid entries in Epochs, Batch Size, Learning Rate(Decimal)",Toast.LENGTH_SHORT).show();
@@ -117,7 +121,7 @@ public class TrainActivity extends AppCompatActivity {
                 Intent i =  new Intent(TrainActivity.this,TestActivity.class);
                 i.putStringArrayListExtra("classes", (ArrayList<String>) classes);
                 i.putExtra("path",path);
-                i.putExtra("trained",trained);
+                i.putExtra("trained",(trained || withdownload.isChecked()));
                 startActivity(i);
             }
         });
@@ -129,7 +133,6 @@ public class TrainActivity extends AppCompatActivity {
     public class send extends AsyncTask<Void, Void, Void> {
 
         Socket clientsocket;
-        PrintWriter pw;
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -193,6 +196,6 @@ public class TrainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        super.onBackPressed();
     }
 }

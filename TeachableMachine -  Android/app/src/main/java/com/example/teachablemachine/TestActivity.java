@@ -2,11 +2,17 @@ package com.example.teachablemachine;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.ClipData;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
@@ -21,6 +27,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.custom.FirebaseCustomLocalModel;
 import com.google.firebase.ml.custom.FirebaseModelDataType;
@@ -34,8 +42,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -53,6 +65,8 @@ public class TestActivity extends AppCompatActivity {
     ProbAdapter adapter;
 
     int nclasses = 2;
+
+    public static final int PICK_IMAGE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +109,24 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+        picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(ActivityCompat.checkSelfPermission(TestActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(TestActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
+                    return;
+                }
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
     }
 
     private void download(String path) {
@@ -107,18 +139,27 @@ public class TestActivity extends AppCompatActivity {
         name = paths[7];
         Uri uri = Uri.parse(path+"/"+paths[7]+".tflite");
         Log.d("teste",uri.toString());
+
+        final Dialog md = new Dialog(this);
+        md.setCanceledOnTouchOutside(false);
+        md.setContentView(R.layout.model_dialog);
+
+        md.show();
+
         ref.getFile(uri).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(TestActivity.this,"File downloaded.",Toast.LENGTH_SHORT).show();
+                md.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("teste",e.getMessage());
+                md.dismiss();
                 Toast.makeText(TestActivity.this,"File download failed.",Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 
@@ -132,6 +173,22 @@ public class TestActivity extends AppCompatActivity {
             input.setImageBitmap(imageBitmap);
 
             to_model(imageBitmap);
+        }
+
+        if(requestCode == PICK_IMAGE && resultCode==RESULT_OK)
+        {
+            Uri filePath = data.getData();
+
+            try {
+                Bitmap img=MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                img = Bitmap.createScaledBitmap(img,256,256,false);
+                input.setImageBitmap(img);
+
+                to_model(img);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -151,6 +208,21 @@ public class TestActivity extends AppCompatActivity {
                 input[batchNum][x][y][2] = (Color.blue(pixel)) / 255.0f;
             }
         }
+
+//        for(int i=0;i<256;i++)
+//        {
+//            for(int j=0;j<256;j++)
+//            {
+//                for(int k=0;k<3;k++)
+//                {
+//                    Log.d("episky",i+" : "+j+" : "+k+" : " + input[0][i][j][k]+" ");
+//                }
+//
+//                Log.d("episky","\n");
+//            }
+//
+//            Log.d("episky","\n");
+//        }
 
         try {
             FirebaseCustomLocalModel localModel = new FirebaseCustomLocalModel.Builder().setFilePath(path+"/"+name+".tflite").build();
@@ -179,6 +251,7 @@ public class TestActivity extends AppCompatActivity {
                                     Toast.makeText(TestActivity.this,"Task Success",Toast.LENGTH_SHORT).show();
 
                                     float[][] out = result.getOutput(0);
+
                                     float[] probabilities = out[0];
 
                                     int index = 0;

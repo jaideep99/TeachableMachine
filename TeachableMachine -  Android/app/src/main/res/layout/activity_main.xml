@@ -42,12 +42,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/images"
+                    android:background="@drawable/background"
+                    android:padding="8dp"
+                    android:elevation="4dp"
                     >
 
                     <ImageView
                         android:layout_width="320dp"
                         android:layout_height="320dp"
-                        android:src="@drawable/teachimages"
+                        android:src="@drawable/imageclass"
                         />
                     <TextView
                         android:layout_width="320dp"
@@ -62,7 +65,7 @@
                     <TextView
                         android:layout_width="320dp"
                         android:layout_height="wrap_content"
-                        android:text="Teach a model to classify images using files or your webcam."
+                        android:text="Teach a model to classify images using Files or your Camera."
                         android:textSize="16sp"
                         android:textColor="#000000"
                         android:fontFamily="@font/poppins"
@@ -76,13 +79,17 @@
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="50dp"
+                    android:background="@drawable/background"
+                    android:elevation="4dp"
+                    android:padding="8dp"
+                    android:layout_marginBottom="50dp"
                     android:id="@+id/sounds"
                     >
 
                     <ImageView
                         android:layout_width="320dp"
                         android:layout_height="320dp"
-                        android:src="@drawable/teachsounds"
+                        android:src="@drawable/speechrecog"
 
                         />
                     <TextView

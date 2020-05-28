@@ -28,7 +28,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassHolder>
 
         void onItemClick(int position);
         void deleteClick(int position);
-        void onRename(int position,String newname);
     }
 
     public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener)
@@ -60,14 +59,13 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassHolder>
     public class ClassHolder extends RecyclerView.ViewHolder{
 
         EditText classname;
-        ImageView edit,delete;
+        ImageView delete;
         TextView dataset;
 
         public ClassHolder(@NonNull View itemView) {
             super(itemView);
 
             classname = (EditText) itemView.findViewById(R.id.classname);
-            edit  = (ImageView) itemView.findViewById(R.id.editclass);
             delete = (ImageView) itemView.findViewById(R.id.deleteclass);
             dataset = (TextView) itemView.findViewById(R.id.databtn);
 
@@ -99,20 +97,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ClassHolder>
                 }
             });
 
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(mListener!=null)
-                    {
-                        String newname = classname.getText().toString();
-                        int pos = getAdapterPosition();
-                        if(pos!=RecyclerView.NO_POSITION)
-                        {
-                            mListener.onRename(pos,newname);
-                        }
-                    }
-                }
-            });
 
 
 

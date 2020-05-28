@@ -22,15 +22,6 @@
             android:id="@+id/classname"
             android:layout_alignParentLeft="true"
             />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/saveedit"
-            android:layout_toRightOf="@+id/classname"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="4dp"
-            android:id="@+id/editclass"
-            />
 
         <ImageView
             android:layout_width="30dp"

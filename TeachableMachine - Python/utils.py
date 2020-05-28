@@ -50,7 +50,8 @@ def clipped_zoom(img, zoom_factor, **kwargs):
 def augment_image():
 
     data = []
-    img = cv2.imread('cache/take.png')
+    # img = cv2.imread('cache/take.png')
+    img = Image.open('cache/take.png')
     img = np.array(img, dtype = np.uint8)
     img = img/255
     
