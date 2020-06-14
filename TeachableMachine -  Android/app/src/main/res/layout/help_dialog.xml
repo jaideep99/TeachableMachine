@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="320dp"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="28dp"
+    android:layout_marginRight="28dp"
+    android:background="@drawable/black_trans">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/query"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info"
+            android:textColor="#979797"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/help_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textColor="#FFF"
+        android:text="Batch size is a term used in machine learning and refers to the number of training examples utilized in one iteration."
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium"/>
 
 </LinearLayout>

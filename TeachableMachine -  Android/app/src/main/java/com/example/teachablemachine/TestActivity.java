@@ -55,6 +55,7 @@ public class TestActivity extends AppCompatActivity {
     ImageView click,picker;
     TextView output;
 
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     List<String> classes;
     String path;
@@ -117,7 +118,7 @@ public class TestActivity extends AppCompatActivity {
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(TestActivity.this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
-                    return;
+
                 }
 
                 Intent intent = new Intent();
@@ -131,14 +132,12 @@ public class TestActivity extends AppCompatActivity {
 
     private void download(String path) {
         String[] paths = path.split("/");
-        String npath = paths[5]+"/"+paths[6]+"/"+paths[7]+"/model/"+paths[7]+".tflite";
+        String npath = paths[5]+"/"+paths[6]+"/model/"+paths[7]+".tflite";
         StorageReference root = FirebaseStorage.getInstance().getReference();
         StorageReference ref = root.child(npath);
 
-        Log.d("teste",npath);
         name = paths[7];
         Uri uri = Uri.parse(path+"/"+paths[7]+".tflite");
-        Log.d("teste",uri.toString());
 
         final Dialog md = new Dialog(this);
         md.setCanceledOnTouchOutside(false);
@@ -156,7 +155,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 md.dismiss();
-                Toast.makeText(TestActivity.this,"File download failed.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestActivity.this,"File download failed. or No models present!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -208,21 +207,6 @@ public class TestActivity extends AppCompatActivity {
                 input[batchNum][x][y][2] = (Color.blue(pixel)) / 255.0f;
             }
         }
-
-//        for(int i=0;i<256;i++)
-//        {
-//            for(int j=0;j<256;j++)
-//            {
-//                for(int k=0;k<3;k++)
-//                {
-//                    Log.d("episky",i+" : "+j+" : "+k+" : " + input[0][i][j][k]+" ");
-//                }
-//
-//                Log.d("episky","\n");
-//            }
-//
-//            Log.d("episky","\n");
-//        }
 
         try {
             FirebaseCustomLocalModel localModel = new FirebaseCustomLocalModel.Builder().setFilePath(path+"/"+name+".tflite").build();

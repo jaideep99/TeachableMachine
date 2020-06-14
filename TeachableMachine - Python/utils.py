@@ -76,14 +76,14 @@ def augment_image():
     return data
 
 def push_model(project,Uid,ptype):
-    cred = credentials.Certificate('serviceAccountCredentials.json')
+    cred = credentials.Certificate('/TeachableMachine - Python/serviceAccountCredentials.json')
     app = firebase_admin.initialize_app(cred, {
         'storageBucket': 'teachable-machine-eb5f7.appspot.com'
     },name='storage2')
 
     storage_bucket = storage.bucket(app=app)
 
-    blob = storage_bucket.blob(Uid+"/"+ptype+"/"+project+"/"+"model/"+project+".tflite")
+    blob = storage_bucket.blob(Uid+"/"+ptype+"/"+"model/"+project+".tflite")
 
     blob.upload_from_filename(project+".tflite")
 

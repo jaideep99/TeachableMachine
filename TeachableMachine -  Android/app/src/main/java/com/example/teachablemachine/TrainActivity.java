@@ -2,7 +2,10 @@ package com.example.teachablemachine;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,8 +46,12 @@ public class TrainActivity extends AppCompatActivity {
     TextView progress;
     CheckBox withdownload;
 
+    ImageView epoch_help,lr_help,batch_help;
 
+    String[] help = new String[]{"An epoch is a hyperparameter which is defined before training a model. One epoch is when an entire dataset is passed both forward and backward through the neural network only once."
+    ,"The learning rate is a tuning parameter in an optimization algorithm that determines the step size at each iteration while moving toward a minimum of a loss function.","Batch size is a term used in machine learning and refers to the number of training examples utilized in one iteration."};
 
+    Dialog help_dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,45 @@ public class TrainActivity extends AppCompatActivity {
         test = (LinearLayout)findViewById(R.id.test);
         progress = (TextView) findViewById(R.id.progress);
         withdownload = (CheckBox) findViewById(R.id.download);
+
+        help_dialog = new Dialog(this);
+        help_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        epoch_help = (ImageView) findViewById(R.id.epoch_help);
+        lr_help = (ImageView) findViewById(R.id.lrate_help);
+        batch_help = (ImageView) findViewById(R.id.batch_help);
+
+        epoch_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                help_dialog.setContentView(R.layout.help_dialog);
+                TextView helptext =  (TextView) help_dialog.findViewById(R.id.help_text);
+                helptext.setText(help[0]);
+                help_dialog.show();
+            }
+        });
+
+        lr_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                help_dialog.setContentView(R.layout.help_dialog);
+                TextView helptext =  (TextView) help_dialog.findViewById(R.id.help_text);
+                helptext.setText(help[1]);
+                help_dialog.show();
+            }
+        });
+
+        batch_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                help_dialog.setContentView(R.layout.help_dialog);
+                TextView helptext =  (TextView) help_dialog.findViewById(R.id.help_text);
+                helptext.setText(help[2]);
+                help_dialog.show();
+            }
+        });
 
         dropdown.setOnClickListener(new View.OnClickListener() {
             @Override

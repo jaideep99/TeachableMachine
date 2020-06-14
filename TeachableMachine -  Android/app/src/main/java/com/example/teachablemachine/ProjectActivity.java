@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class ProjectActivity extends AppCompatActivity implements ProjectAdapter.OnItemClickListener {
 
@@ -283,7 +284,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectAdapter
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ProjectActivity.this,"Failed to download some files",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProjectActivity.this,"Please Enable Storage Permission in Settings. Project loading Failed!",Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -292,6 +293,11 @@ public class ProjectActivity extends AppCompatActivity implements ProjectAdapter
 
                 if(flag.equals(path))
                 {
+                    try {
+                        TimeUnit.SECONDS.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     downdialog.dismiss();
                     passActivity(position);
                 }
@@ -340,7 +346,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectAdapter
             i.putExtra("fpath",uid+"/"+category + "/" + itemList.get(position));
             startActivity(i);
         }
-        else if(category=="Sounds")
+        else if(category.equals("Sounds"))
         {
             Intent i  = new Intent(ProjectActivity.this,ImageActivity.class);
             String pathsend = path+"/"+itemList.get(position);
@@ -381,7 +387,13 @@ public class ProjectActivity extends AppCompatActivity implements ProjectAdapter
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot ds :  dataSnapshot.getChildren()){
-                    itemList.add((String) ds.getValue());
+
+                    String ps = (String) ds.getValue();
+
+                    if(!ps.equals("Model"))
+                    {
+                        itemList.add(ps);
+                    }
                 }
 
                 adapter.notifyDataSetChanged();
