@@ -35,7 +35,7 @@ __Socket Connection__
 <p align=center>
 <img src="Images/server.png">
 </p>
-
+__Model Results__
 <p align=center>
 <img src="Images/result.png">
 </p>
