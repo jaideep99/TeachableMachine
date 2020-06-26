@@ -117,6 +117,14 @@ public class IgridActivity extends AppCompatActivity {
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(ActivityCompat.checkSelfPermission(IgridActivity.this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(IgridActivity.this,
+                            new String[]{Manifest.permission.CAMERA},121);
+                    return;
+                }
+
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File imagesFolder = new File(local_path);
                 File newfile = new File(imagesFolder, "take.jpg");
@@ -177,7 +185,6 @@ public class IgridActivity extends AppCompatActivity {
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(IgridActivity.this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
-                    return;
                 }
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

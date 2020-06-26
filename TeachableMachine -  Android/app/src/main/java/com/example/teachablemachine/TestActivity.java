@@ -103,6 +103,14 @@ public class TestActivity extends AppCompatActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(ActivityCompat.checkSelfPermission(TestActivity.this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(TestActivity.this,
+                            new String[]{Manifest.permission.CAMERA},121);
+                    return;
+                }
+
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
