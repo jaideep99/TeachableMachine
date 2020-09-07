@@ -1,6 +1,4 @@
 # Teachable Machine
-An integrated application to avoid epidemics and for currently ending CoVID-19
-
 
 __Motive__
 
